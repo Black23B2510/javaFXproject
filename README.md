@@ -1,8 +1,8 @@
 ﻿# JavaFXproject [Ho Thi Den] Pharmacy
 1. Structure of project<br>
-   ![This is an image](https://github.com/Black23B2510/javaFXproject/blob/main/images/database.PNG)
+   ![This is an image](https://github.com/Black23B2510/javaFXproject/blob/main/images/project_structure.PNG)
 2. ERM of Database<br>
-   ![This is an image](https://github.com/Black23B2510/javaFXproject/blob/main/image/ERM.PNG)
+   ![This is an image](https://github.com/Black23B2510/javaFXproject/blob/main/images/database.PNG)
 3. Link video demo<br>[Video demo](https://youtu.be/qJreUnQGjm4)
 5. Completed features of project
 - **Login as Admin:** You have to input your name and password correctly to access, if not, you have to input again<br>
