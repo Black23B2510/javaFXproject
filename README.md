@@ -6,13 +6,13 @@
 3. Link video demo<br>[Video demo](https://youtu.be/qJreUnQGjm4)
 5. Completed features of project
 - **Login as Admin:** You have to input your name and password correctly to access, if not, you have to input again<br>
-  ![](https://github.com/Black23B2510/javaFXproject/blob/main/image/login.PNG)
+  ![](https://github.com/Black23B2510/javaFXproject/blob/main/images/login.PNG)
 - **Show all products in Database:** After login successfully, you can see all products<br>
-  ![](https://github.com/Black23B2510/javaFXproject/blob/main/image/showProducts.PNG)
+  ![](https://github.com/Black23B2510/javaFXproject/blob/main/images/showProducts.PNG)
 - **Add new products:** Click on 'ADD NEW PRODUCT' button for adding<br>
-  ![](https://github.com/Black23B2510/javaFXproject/blob/main/image/addProduct.PNG)
+  ![](https://github.com/Black23B2510/javaFXproject/blob/main/images/addProduct.PNG)
 - **Edit products:** Click on 'EDIT' button for editing<br>
-  ![](https://github.com/Black23B2510/javaFXproject/blob/main/image/edit.PNG)
+  ![](https://github.com/Black23B2510/javaFXproject/blob/main/images/edit.PNG)
 - **DELETE products:** Click on 'DELETE' button for deleting
 6. Features in progress
 - **Login as customer:** if you are a customer, you just can view products in my pharmacy
