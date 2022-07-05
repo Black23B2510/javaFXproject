@@ -4,6 +4,7 @@ import com.example.demo4.Models.Customers;
 import com.example.demo4.Models.admin;
 import com.example.demo4.Models.products;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -41,7 +42,7 @@ public class DBConnection {
     }
     public ArrayList<Customers> getCustomers(){
         ArrayList<Customers> customers = new ArrayList<>();
-        String sql = "SELECT * FROM customer";
+        String sql = "SELECT * FROM customers";
         try {
             ResultSet rs = con.prepareStatement(sql).executeQuery();
             while (rs.next()){
@@ -60,6 +61,16 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
         return customers;
+    }
+    public void insertCustomer(Customers cus){
+        String sql = "INSERT INTO customers(cusName, email, address, password) VALUE ('"+cus.cusName+"','"+cus.email+"','"+cus.address+"','"+cus.password+"')";
+        System.out.println(sql);
+        try {
+            con.prepareStatement(sql).executeUpdate();
+            System.out.println("Insert successfully");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public ArrayList<products> getProduct(){
         ArrayList<products> listProducts = new ArrayList<>();
@@ -110,4 +121,27 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
     }
+    public ArrayList<products> getProductById(int id){
+        ArrayList<products> product = new ArrayList<>();
+        String sql = "SELECT * from products where id = '"+id+"'";
+        System.out.println(sql);
+        try {
+            ResultSet rs = con.prepareStatement(sql).executeQuery();
+            while (rs.next()){
+                products pro = new products(
+                        rs.getString("name"),
+                        rs.getString("NSX"),
+                        rs.getString("image"),
+                        rs.getFloat("price"),
+                        rs.getInt("quantity")
+                );
+                product.add(pro);
+            }
+            System.out.println("Select successfully");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return product;
+    }
+
 }

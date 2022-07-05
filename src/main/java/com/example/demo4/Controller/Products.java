@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -193,19 +192,20 @@ public class Products {
         allProducts.setSpacing(20);
         for(int i=0; i<Products.size(); i++){
             Label price = new Label(""+Products.get(i).price+"VND");
+            Label nameProduct = new Label(Products.get(i).name);
             price.setStyle("-fx-font-weight: bold");
             Image linkImage = new Image(Products.get(i).image);
             ImageView imgView = new ImageView();
             imgView.setImage(linkImage);
             imgView.setFitWidth(100);
             imgView.setFitHeight(100);
-            Button btnCart = new Button("ADD TO CART");
-            Button btnBuy = new Button("BUY NOW");
+            Button btnCart = new Button("Add to cart");
+            Button btnBuy = new Button("View more");
             HBox button = new HBox();
             button.setSpacing(5);
             button.getChildren().addAll(btnCart,btnBuy);
             VBox product = new VBox();
-            product.getChildren().addAll(imgView,price,button);
+            product.getChildren().addAll(imgView,nameProduct,price,button);
             allProducts.getChildren().addAll(product);
         }
         vBox.getChildren().addAll(title,allProducts);
