@@ -86,7 +86,7 @@ public class MainApplication extends Application {
         VBox loginPage = lg.login(window,start,adminPage,db,userPage);
         pro.getProductsDisplay(db,vBox,window,start, adminPage);
         login = new Scene(loginPage);
-        window.setScene(userPage);
+        window.setScene(start);
         window.show();
     }
 }

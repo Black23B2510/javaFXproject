@@ -2,9 +2,8 @@ package com.example.demo4.Models.data;
 
 import com.example.demo4.Models.Customers;
 import com.example.demo4.Models.admin;
-import com.example.demo4.Models.products;
+import com.example.demo4.Models.product;
 
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -72,19 +71,20 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<products> getProduct(){
-        ArrayList<products> listProducts = new ArrayList<>();
+    public ArrayList<product> getProduct(){
+        ArrayList<product> listProducts = new ArrayList<>();
         String sql  = "SELECT * FROM products";
         try {
             ResultSet result = con.prepareStatement(sql).executeQuery();
             while (result.next()){
-                products product = new products(
+                product product = new product(
                         result.getInt("id"),
                         result.getString("name"),
                         result.getString("NSX"),
                         result.getString("image"),
                         result.getFloat("price"),
-                        result.getInt("quantity")
+                        result.getInt("quantity"),
+                        result.getString("description")
                 );
                 listProducts.add(product);
             }
@@ -101,8 +101,8 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
     }
-    public void insertProduct(products pro){
-        String sql = "INSERT INTO products(name, NSX,image, price, quantity) VALUE ('"+pro.name+"','"+pro.NSX+"','"+pro.image+"','"+pro.price+"','"+pro.quantity+"')";
+    public void insertProduct(product pro){
+        String sql = "INSERT INTO products(name, NSX,image, price, quantity, description) VALUE ('"+pro.name+"','"+pro.NSX+"','"+pro.image+"','"+pro.price+"','"+pro.quantity+"','"+pro.description+"')";
         System.out.println(sql);
         try {
             con.prepareStatement(sql).executeUpdate();
@@ -111,8 +111,8 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
     }
-    public void updateProduct(products pro){
-        String sql = "UPDATE products SET name ='"+pro.name+"', NSX ='"+pro.NSX+"', image = '"+pro.image+"', price = '"+pro.price+"', quantity = '"+pro.quantity+"' WHERE id = "+pro.id+"";
+    public void updateProduct(product pro){
+        String sql = "UPDATE products SET name ='"+pro.name+"', NSX ='"+pro.NSX+"', image = '"+pro.image+"', price = '"+pro.price+"', quantity = '"+pro.quantity+"', description = '"+pro.description+"' WHERE id = "+pro.id+"";
         System.out.println(sql);
         try {
             con.prepareStatement(sql).executeUpdate();
@@ -121,27 +121,27 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<products> getProductById(int id){
-        ArrayList<products> product = new ArrayList<>();
-        String sql = "SELECT * from products where id = '"+id+"'";
-        System.out.println(sql);
-        try {
-            ResultSet rs = con.prepareStatement(sql).executeQuery();
-            while (rs.next()){
-                products pro = new products(
-                        rs.getString("name"),
-                        rs.getString("NSX"),
-                        rs.getString("image"),
-                        rs.getFloat("price"),
-                        rs.getInt("quantity")
-                );
-                product.add(pro);
-            }
-            System.out.println("Select successfully");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return product;
-    }
+//    public ArrayList<product> getProductById(int id){
+//        ArrayList<product> product = new ArrayList<>();
+//        String sql = "SELECT * from products where id = '"+id+"'";
+//        System.out.println(sql);
+//        try {
+//            ResultSet rs = con.prepareStatement(sql).executeQuery();
+//            while (rs.next()){
+//                com.example.demo4.Models.product pro = new product(
+//                        rs.getString("name"),
+//                        rs.getString("NSX"),
+//                        rs.getString("image"),
+//                        rs.getFloat("price"),
+//                        rs.getInt("quantity")
+//                );
+//                product.add(pro);
+//            }
+//            System.out.println("Select successfully");
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return product;
+//    }
 
 }

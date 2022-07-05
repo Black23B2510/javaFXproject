@@ -1,7 +1,7 @@
 package com.example.demo4.Controller;
 
 import com.example.demo4.Models.data.DBConnection;
-import com.example.demo4.Models.products;
+import com.example.demo4.Models.product;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -40,7 +40,7 @@ public class Products {
         list.setTextFill(Color.GREEN);
         table.addRow(0,list);
         table.addRow(1,id,nameProduct,NSX,image,price,quantity, edit,delete);
-        ArrayList<products> listProducts = db.getProduct();
+        ArrayList<product> listProducts = db.getProduct();
         for(int i=0; i<listProducts.size();i++){
             Image linkImage = new Image(listProducts.get(i).image);
             ImageView imgView = new ImageView();
@@ -56,7 +56,7 @@ public class Products {
             btnEdit.setId(String.valueOf(listProducts.get(i).id));
             int finalI = i;
             btnEdit.setOnAction((ActionEvent e)->{
-                updateProduct(db, vBox,listProducts.get(finalI).id,listProducts.get(finalI).name,listProducts.get(finalI).NSX,listProducts.get(finalI).image,listProducts.get(finalI).quantity,listProducts.get(finalI).price, window, scene1, scene3);
+                updateProduct(db, vBox,listProducts.get(finalI).id,listProducts.get(finalI).name,listProducts.get(finalI).NSX,listProducts.get(finalI).image,listProducts.get(finalI).quantity,listProducts.get(finalI).price, listProducts.get(finalI).description, window, scene1, scene3);
             });
             Button btnDelete = new Button("DELETE");
             btnDelete.setId(String.valueOf(listProducts.get(i).id));
@@ -100,23 +100,26 @@ public class Products {
         Label addImage = new Label("Image");
         Label addPrice = new Label("Price:");
         Label addQuantity = new Label("Quantity:");
+        Label addDes = new Label("Description");
         TextField txtName = new TextField();
         TextField txtNSX = new TextField();
         TextField txtPrice = new TextField();
         TextField txtQuantity = new TextField();
+        TextField txtDes = new TextField();
         TextField txtImage = new TextField();
         Button btnAdd = new Button("ADD");
         btnAdd.setOnAction((ActionEvent e)->{
-            if(txtName.getText() =="" || txtNSX.getText()=="" || txtPrice.getText()=="" || txtQuantity.getText()==""){
+            if(txtName.getText() =="" || txtNSX.getText()=="" || txtPrice.getText()=="" || txtQuantity.getText()=="" || txtDes.getText()==""){
                 addError();
             }
             else{
-                db.insertProduct(new products(
+                db.insertProduct(new product(
                         txtName.getText(),
                         txtNSX.getText(),
                         txtImage.getText(),
                         Float.valueOf(txtPrice.getText()),
-                        Integer.valueOf(txtQuantity.getText())
+                        Integer.valueOf(txtQuantity.getText()),
+                        txtDes.getText()
 
                 ));
                 vBox.getChildren().removeAll(vBox.getChildren());
@@ -128,7 +131,8 @@ public class Products {
         addProducts.addRow(2,addImage,txtImage);
         addProducts.addRow(3,addPrice,txtPrice);
         addProducts.addRow(4,addQuantity,txtQuantity);
-        addProducts.addRow(5,btnAdd);
+        addProducts.addRow(5,addDes,txtDes);
+        addProducts.addRow(6,btnAdd);
         vBox.getChildren().addAll(addProducts);
     }
     public void deleteProduct(DBConnection db, int id, VBox vBox,Stage window, Scene scene1, Scene scene3){
@@ -137,7 +141,7 @@ public class Products {
         getProductsDisplay(db,vBox, window, scene1, scene3);
 
     }
-    public void updateProduct(DBConnection db, VBox vBox,int id, String name, String NSX,String img, int quantity, Float price, Stage window, Scene scene1, Scene scene3){
+    public void updateProduct(DBConnection db, VBox vBox,int id, String name, String NSX,String img, int quantity, Float price,String des, Stage window, Scene scene1, Scene scene3){
         GridPane updateProducts = new GridPane();
         updateProducts.setMinSize(400, 200);
         updateProducts.setPadding(new Insets(10, 10, 10, 10));
@@ -149,6 +153,7 @@ public class Products {
         Label addImage = new Label("Link image");
         Label addPrice = new Label("Price:");
         Label addQuantity = new Label("Quantity:");
+        Label addDescription = new Label("Description");
         TextField txtName = new TextField();
         txtName.setText(name);
         TextField txtNSX = new TextField();
@@ -157,6 +162,8 @@ public class Products {
         txtPrice.setText(""+price);
         TextField txtQuantity = new TextField();
         txtQuantity.setText(""+quantity);
+        TextField txtDes = new TextField();
+        txtDes.setText(des);
         TextField txtImage = new TextField();
         txtImage.setText(img);
         Button btnUpdate = new Button("SAVE PRODUCT");
@@ -165,8 +172,9 @@ public class Products {
             String updateNSX = txtNSX.getText();
             Float updatePrice = Float.valueOf(txtPrice.getText());
             int updateQuantity = Integer.parseInt(txtQuantity.getText());
+            String updateDes = txtDes.getText();
             String image = txtImage.getText();
-            db.updateProduct(new products(id,updateName,updateNSX,image,updatePrice,updateQuantity));
+            db.updateProduct(new product(id,updateName,updateNSX,image,updatePrice,updateQuantity,updateDes));
             vBox.getChildren().removeAll(vBox.getChildren());
             getProductsDisplay(db, vBox, window, scene1, scene3);
         });
@@ -179,7 +187,8 @@ public class Products {
         updateProducts.addRow(2,addImage,txtImage);
         updateProducts.addRow(3,addPrice,txtPrice);
         updateProducts.addRow(4,addQuantity,txtQuantity);
-        updateProducts.addRow(5,btnUpdate, goBack);
+        updateProducts.addRow(5,addDescription,txtDes);
+        updateProducts.addRow(6,btnUpdate, goBack);
         vBox.getChildren().removeAll(vBox.getChildren());
         vBox.getChildren().addAll(updateProducts);
     }
@@ -187,14 +196,14 @@ public class Products {
         Label title = new Label("CAC SAN PHAM TAI CUA HANG");
         GridPane listProducts = new GridPane();
         listProducts.addRow(0,title);
-        ArrayList<products> Products = db.getProduct();
+        ArrayList<product> products = db.getProduct();
         HBox allProducts = new HBox();
         allProducts.setSpacing(20);
-        for(int i=0; i<Products.size(); i++){
-            Label price = new Label(""+Products.get(i).price+"VND");
-            Label nameProduct = new Label(Products.get(i).name);
+        for(int i = 0; i< products.size(); i++){
+            Label price = new Label(""+ products.get(i).price+"VND");
+            Label nameProduct = new Label(products.get(i).name);
             price.setStyle("-fx-font-weight: bold");
-            Image linkImage = new Image(Products.get(i).image);
+            Image linkImage = new Image(products.get(i).image);
             ImageView imgView = new ImageView();
             imgView.setImage(linkImage);
             imgView.setFitWidth(100);
